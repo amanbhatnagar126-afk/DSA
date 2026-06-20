@@ -1,32 +1,33 @@
 class Solution {
     public int[] intersection(int[] nums1, int[] nums2) {
-         boolean[] seen = new boolean[1001];
-        
-        // Mark the numbers present in nums1
-        for (int num : nums1) {
-            seen[num] = true;
-        }
-        
-        // Temporary array to store results
-        int[] tempResult = new int[1001];
-        int count = 0;
-        
-        // Check nums2 against our boolean array
-        for (int num : nums2) {
-            if (seen[num]) {
-                tempResult[count++] = num;
-                // Set to false immediately so we don't add duplicates
-                seen[num] = false; 
+    
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+
+        List<Integer> resultList = new ArrayList<>();
+
+        int i = 0;
+        int j = 0;
+
+        while (i < nums1.length && j < nums2.length){
+            if (nums1[i] < nums2[j]){
+                i++;
+            }
+            else if (nums1[i] > nums2[j]){
+                j++;
+            }
+            else{
+                if(resultList.isEmpty() || resultList.get(resultList.size() - 1) != nums1[i]){
+                    resultList.add(nums1[i]);
+                }
+                i++;
+                j++;
             }
         }
-        
-        // Copy exactly 'count' elements to the final sized array
-        int[] finalResult = new int[count];
-        for (int i = 0; i < count; i++) {
-            finalResult[i] = tempResult[i];
+        int[]result = new int[resultList.size()];
+        for(int k = 0; k < resultList.size(); k++){
+            result[k] = resultList.get(k);
         }
-        
-        return finalResult;
-        
+        return result;
     }
 }
