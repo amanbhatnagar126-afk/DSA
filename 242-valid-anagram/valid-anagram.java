@@ -1,18 +1,25 @@
 class Solution {
     public boolean isAnagram(String s, String t) {
-        if (s.length() != t.length()) return false;
-    
-    int[] count = new int[26]; // Fixed size space O(1)
-    
-    for (int i = 0; i < s.length(); i++) {
-        count[s.charAt(i) - 'a']++;
-        count[t.charAt(i) - 'a']--;
-    }
-    
-    for (int val : count) {
-        if (val != 0) return false;
-    }
-    
-    return true;
+        if (s.length() != t.length()) {
+            return false;
+        }
+        
+        
+        int[] charCounts = new int[26];
+        
+        
+        for (int i = 0; i < s.length(); i++) {
+            charCounts[s.charAt(i) - 'a']++; 
+            charCounts[t.charAt(i) - 'a']--; 
+        }
+        
+        
+        for (int count : charCounts) {
+            if (count != 0) {
+                return false;
+            }
+        }
+        
+        return true;
     }
 }
