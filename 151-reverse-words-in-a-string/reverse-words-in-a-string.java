@@ -11,12 +11,11 @@ class Solution {
                 break;
             }
 
-            int j = i;
 
+            int j=i;
             while(j >= 0 && s.charAt(j) != ' '){
                 j--;
             }
-
             ans.append(s.substring(j+1, i+1));
 
             while(j >= 0 && s.charAt(j) == ' '){
