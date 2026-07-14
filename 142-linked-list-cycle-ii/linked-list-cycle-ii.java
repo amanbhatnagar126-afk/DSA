@@ -18,7 +18,7 @@ public class Solution {
         ListNode fast = head;
         boolean hasCycle = false;
 
-        //1.) DETECTION
+        //Part 1.) DETECTION
         while(fast != null && fast.next != null){
             slow = slow.next;
             fast = fast.next.next;
@@ -28,18 +28,21 @@ public class Solution {
                 break;
             }
         }
-        //If No Cycle exists
+        //Part 2.) If No Cycle exists
         if(!hasCycle){
             return null;
         } 
 
-        //Entry Point Finderrr
+        //Part 3.) Entry Point Finderrr
         slow = head;
         while(slow != fast){
             slow = slow.next;
             fast = fast.next;
         }
         return slow;
+
+        //TC = O(n)---(Part 1) takes N steps to find a match, (Part 3) takes fewer than N steps.
+        //SC = O(1)---Only slow & fast and a boolean(hasCycle) declared, tracking everything in-place without copying data structures.
 
     }
 }
