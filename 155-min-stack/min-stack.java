@@ -29,48 +29,31 @@
  * int param_3 = obj.top();
  * int param_4 = obj.getMin();
  */
- class MinStack {
-    
-    private class Node {
-        int val;
-        int min;
-        Node next;
+import java.util.Stack;
+class MinStack {
+    private Stack<Integer> stack = new Stack<>(), minStack = new Stack<>();
 
-        Node(int val, int min, Node next) {
-            this.val = val;
-            this.min = min;
-            this.next = next;
-        }
-    }
-
-    private Node head;
-
-    public MinStack() {
-        head = null;
-    }
-    
     public void push(int value) {
-        if (head == null) {
-            
-            head = new Node(value, value, null);
-        } else {
-            
-            int currentMin = Math.min(value, head.min);
-            head = new Node(value, currentMin, head);
+        stack.push(value);
+        if (minStack.isEmpty() || value <= minStack.peek()) {
+            minStack.push(value);
         }
     }
     
     public void pop() {
-        if (head != null) {
-            head = head.next; 
+        if (!stack.isEmpty()) {
+            if (stack.peek().equals(minStack.peek())) {
+                minStack.pop();
+            }
+            stack.pop();
         }
     }
     
     public int top() {
-        return head.val;
+        return stack.peek();
     }
     
     public int getMin() {
-        return head.min;
+        return minStack.peek();
     }
 }
