@@ -1,28 +1,28 @@
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 class Solution {
     public int countPrimes(int n) {
         if(n <= 2){
             return 0;
         }
-        boolean[] isPrime = new boolean[n];
-        Arrays.fill(isPrime, true);
+        boolean[] isComposite = new boolean[n];
+        List<Integer> primes = new ArrayList<>();
 
-        isPrime[0] = false;
-        isPrime[1] = false;
+        for(int i = 2; i < n; i++){
+            if(!isComposite[i]){
+                primes.add(i);
+            }
+            for(int p : primes){
+                if(i * p >= n){
+                    break;
+                }
+                isComposite[i * p] = true;
 
-        for(int i = 2; i * i < n; i++){
-            if(isPrime[i]){
-                for(int j = i*i; j < n; j += i){
-                    isPrime[j] = false;
+                if(i % p == 0){
+                    break;
                 }
             }
         }
-        int count = 0;
-        for(int i = 2; i < n; i++){
-            if(isPrime[i]){
-                count++;
-            }
-        }
-        return count;
+        return primes.size();
     }
 }
