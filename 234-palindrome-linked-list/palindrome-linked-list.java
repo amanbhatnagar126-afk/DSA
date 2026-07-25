@@ -8,27 +8,47 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-import java.util.ArrayList;
 class Solution {
     public boolean isPalindrome(ListNode head) {
-        List<Integer> list = new ArrayList<>();
+        if(head == null || head.next == null){
+            return true;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode secondHalfHead = reverseList(slow);
+        ListNode firstHalfHead = head;
+
+        ListNode p1 = firstHalfHead;
+        ListNode p2 = secondHalfHead;
+        boolean isPalindrome = true;
+
+        while(p2 != null){
+            if(p1.val != p2.val){
+                isPalindrome = false;
+                break;
+            }
+            p1 = p1.next;
+            p2 = p2.next;
+        }
+        reverseList(secondHalfHead);
+
+        return isPalindrome;
+    } 
+    private ListNode reverseList(ListNode head){
+        ListNode prev = null;
         ListNode current = head;
 
         while(current != null){
-            list.add(current.val);
-            current = current.next;
+            ListNode nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
         }
-
-        int left = 0;
-        int right = list.size() - 1;
-
-        while(left < right){
-            if(!list.get(left).equals(list.get(right))){
-                return false;
-            }
-            left++;
-            right--;
-        }
-        return true;
+        return prev;
     }
-}
+} 
